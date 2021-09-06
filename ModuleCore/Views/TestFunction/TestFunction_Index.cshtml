@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>主題分類</h1>
+    <div>
+        <ul>
+            <li><a href="Home/CSharp_View">C#基礎</a></li>
+            <li><a href="">.net core mvc 框架</a></li>
+            <li><a href="">功能測試開發</a></li>
+            <li><a href="">LeetCode</a></li>
+            <li><a href="">DS-Algo</a></li>
+        </ul>
+    </div>
+
+    <label> Gmail 寄信觸發</label>
+    @*<button asp-action="btneMail" asp-controller="Home" type="submit">eMail寄信</button>*@
+    <button type="button" onclick="location.href='@Url.Action("btneMail", "TestFunction")'"> Gmail 寄信觸發</button>
+    <br>
+    <form method="post">
+        <label> Gmail 寄信觸發 attachment</label>
+        <button asp-action="btnMailAttachment" asp-controller="TestFunction" type="submit">eMail寄信</button>
+
+        <br /><hr />
+        <label>SignalR 頁面測試</label>
+        <button asp-action="GameHub" asp-controller="TestFunction" type="submit">跳吧</button>
+    </form>
+
+    <br /><hr />
+    <h3>File 讀取圖片 MemoryStream ToBase64String</h3>
+    <form enctype="multipart/form-data" method="post">
+        <div>
+            <tr>
+                <td>
+                    <h3>MemoryStream</h3>
+                    <h5>圖片轉成base64存成到資料庫</h5>
+                </td>
+                <td>
+                    <input id="txtBase64Img" type="file" name="fileBase64Img" accept="image/*">
+                </td>
+                <td>
+                    <button id="btnBase64Img" type="submit" asp-action="Base64Img" asp-controller="TestFunction">send to back</button>
+                </td>
+            </tr>
+        </div>
+        <hr />
+
+        <div>
+            <tr>
+                <td>
+                    <h3>前端讀取Base64轉圖片</h3>
+                </td>
+                <td>
+                    <input id="txtshowBase64Img" type="file" name="txtshowBase64Img" accept="image/*">
+                </td>
+                <td>
+                    <button asp-action="show64Img" asp-controller="TestFunction">test</button>
+                </td>
+                <td>
+                    <img src="data:image/png;base64,@TempData[" ImgBase64"]" alt="" class="">
+                </td>
+                <td>
+                    @TempData["ImgBase64"]
+                </td>
+            </tr>
+        </div>
+        <hr />
+        <div>
+            <tr>
+                <td>
+                    <h3>字串回傳</h3>
+                </td>
+                <td>
+                    <input id="txtback" type="text" name="txtString">
+                </td>
+                <td>
+                    <button asp-action="txtString" asp-controller="TestFunction">test</button>
+                </td>
+            </tr>
+        </div>
+
+    </form>
+
+</body>
+</html>

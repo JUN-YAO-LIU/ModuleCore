@@ -1,0 +1,5 @@
+note:.net core 的裡面，button 如果是以下寫法，會吃到下一行的文字內容。
+<button type="button" onclick="location.href='@Url.Action("btneMail", "Home")'" />
+
+note:controller 移至檢視必須對應到View裡面的資料夾名稱。沒對應到會找不到。
+TestFunctionController -> View_TestFunction.cshtml
