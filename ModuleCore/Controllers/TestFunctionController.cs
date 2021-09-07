@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -137,6 +138,70 @@ namespace ModuleCore.Controllers
             }
             TempData["ImgBase64"] = s;
             return Redirect("/Home/Chapter1");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FileStream_GenTxt()
+        {
+            //1.讀取檔名 路徑
+            string @path = @"C:\\Users\\momom\\Desktop\\CHUBB\\2.2測試紀錄\\ToSenao\\";
+            string @fileName = @"Jim.txt";
+            string TestfilePath = $"{@path}{fileName}";//研究一下怎麼用
+
+            //2.建立txt檔案
+            FileStream fileStream = new FileStream(@path + @fileName, FileMode.Create);
+
+            //3.關掉檔案
+            fileStream.Close();
+
+            //4.寫入檔案 並設定能不能覆蓋檔案、編碼類型
+            using (StreamWriter sw = new StreamWriter(@path + @fileName, false, Encoding.GetEncoding("BIG5")))
+            {
+                string str = "test我超棒"; //公司別--1
+
+                //5.判斷是不是有中文字，中文字佔2Byte
+                byte[] byteStr = Encoding.GetEncoding("big5").GetBytes(str);
+                int lengthstr = byteStr.Length;
+
+                //note: 寫檔 讀檔 會可以用到await
+                //sw.WriteLine(str);
+                await sw.WriteLineAsync(str);
+            }
+            
+            return View("TestFunction_Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FileDownload()
+        {
+            //1.讀取檔名 路徑
+            string @path = @"C:\\Users\\momom\\Desktop\\CHUBB\\2.2測試紀錄\\ToSenao\\";
+            string @fileName = @"Jim.txt";
+            string TestfilePath = $"{@path}{fileName}";//研究一下怎麼用
+            byte[] result;
+            try
+            {
+                //method 1
+                FileStream stream = new FileStream(TestfilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                return File(stream, "application/octet-stream", @fileName); //MME 格式 可上網查 此為通用設定
+
+                // method 2 不會用
+                //using (FileStream SourceStream = File.Open(TestfilePath, FileMode.Open))
+                //{
+                //    result = new byte[SourceStream.Length];
+                //    await SourceStream.ReadAsync(result, 0, (int)SourceStream.Length);
+                //}
+
+                //UserInput.Text = System.Text.Encoding.ASCII.GetString(result);
+            }
+            catch (Exception ex)
+            {
+                return Content("<script>alert('查無此檔案');window.close()</script>"); //利用Content 讀出JS檔案
+            }
+
+            return View("TestFunction_Index");
         }
         #endregion
     }

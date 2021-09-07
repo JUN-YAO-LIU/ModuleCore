@@ -17,10 +17,13 @@
         </ul>
     </div>
 
+    <br /><hr />
+
     <label> Gmail 寄信觸發</label>
     @*<button asp-action="btneMail" asp-controller="Home" type="submit">eMail寄信</button>*@
     <button type="button" onclick="location.href='@Url.Action("btneMail", "TestFunction")'"> Gmail 寄信觸發</button>
     <br>
+
     <form method="post">
         <label> Gmail 寄信觸發 attachment</label>
         <button asp-action="btnMailAttachment" asp-controller="TestFunction" type="submit">eMail寄信</button>
@@ -31,6 +34,7 @@
     </form>
 
     <br /><hr />
+
     <h3>File 讀取圖片 MemoryStream ToBase64String</h3>
     <form enctype="multipart/form-data" method="post">
         <div>
@@ -65,6 +69,29 @@
                 </td>
                 <td>
                     @TempData["ImgBase64"]
+                </td>
+            </tr>
+        </div>
+        <hr />
+
+        <div>
+            <tr>
+                <td>
+                    <h3>1.File Stream 產生txt類型檔案 2.Stream Write 寫入資料</h3>
+                </td>
+                <td>
+                    <button asp-action="FileStream_GenTxt" asp-controller="TestFunction">產檔</button>
+                </td>
+            </tr>
+        </div>
+        <hr />
+        <div>
+            <tr>
+                <td>
+                    <h3>檔案下載</h3>
+                </td>
+                <td>
+                    <button asp-action="FileDownload" asp-controller="TestFunction">下載</button>
                 </td>
             </tr>
         </div>
